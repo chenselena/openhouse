@@ -773,7 +773,8 @@ public class TablesControllerTest {
         mvc, storageManager, buildGetTableResponseBody(mvcResult), INITIAL_TABLE_VERSION, false);
     Assertions.assertEquals(
         tableType, GET_TABLE_RESPONSE_BODY_WITH_TABLE_TYPE.getTableType().toString());
-    RequestAndValidateHelper.deleteTableAndValidateResponse(mvc, GET_TABLE_RESPONSE_BODY);
+    RequestAndValidateHelper.deleteTableAndValidateResponse(
+        mvc, GET_TABLE_RESPONSE_BODY_WITH_TABLE_TYPE);
   }
 
   @Test
@@ -1058,6 +1059,7 @@ public class TablesControllerTest {
 
     Assertions.assertEquals(updatedReplication.get("destination"), "clusterA");
     Assertions.assertEquals(updatedReplication.get("interval"), "12H");
+    Assertions.assertNotNull(updatedReplication.get("cronSchedule"));
     System.out.println();
     RequestAndValidateHelper.deleteTableAndValidateResponse(mvc, GET_TABLE_RESPONSE_BODY);
   }
@@ -1170,6 +1172,7 @@ public class TablesControllerTest {
 
     Assertions.assertEquals(updatedReplication.get("destination"), "clusterA");
     Assertions.assertEquals(updatedReplication.get("interval"), "1D");
+    Assertions.assertNotNull(updatedReplication.get("cronSchedule"));
 
     updatedReplication =
         JsonPath.read(
@@ -1177,6 +1180,7 @@ public class TablesControllerTest {
 
     Assertions.assertEquals(updatedReplication.get("destination"), "clusterB");
     Assertions.assertEquals(updatedReplication.get("interval"), "12H");
+    Assertions.assertNotNull(updatedReplication.get("cronSchedule"));
     RequestAndValidateHelper.deleteTableAndValidateResponse(mvc, GET_TABLE_RESPONSE_BODY);
   }
 }
